@@ -5663,6 +5663,12 @@
 		(uuid "91dc2c83-c1bd-454f-8d0c-9eba3ca2ab9f")
 	)
 	(junction
+		(at 324.1896 248.4999)
+		(diameter 0)
+		(color 0 0 0 0)
+		(uuid "935f7f8e-4a5d-44d8-8ff1-4943f6b1b64d")
+	)
+	(junction
 		(at 28.6483 85.5176)
 		(diameter 0)
 		(color 0 0 0 0)
@@ -5944,7 +5950,7 @@
 	)
 	(wire
 		(pts
-			(xy 297.2478 249.666) (xy 302.2473 249.666)
+			(xy 297.2478 249.666) (xy 312.543 249.666)
 		)
 		(stroke
 			(width 0)
@@ -6534,6 +6540,16 @@
 	)
 	(wire
 		(pts
+			(xy 329.5364 250.6056) (xy 324.1896 250.6056)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "3b6d7dad-4ccc-4b3c-9fdf-7d13641fea82")
+	)
+	(wire
+		(pts
 			(xy 52.0755 205.3182) (xy 52.0755 205.8383)
 		)
 		(stroke
@@ -6941,6 +6957,16 @@
 			(type solid)
 		)
 		(uuid "6a3dd07f-ef98-4326-8732-ba03d997e4bf")
+	)
+	(wire
+		(pts
+			(xy 332.2204 247.0987) (xy 324.1896 247.0987)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "6a930110-bf8d-40f0-b21b-827c46fbc593")
 	)
 	(wire
 		(pts
@@ -7474,6 +7500,16 @@
 	)
 	(wire
 		(pts
+			(xy 312.543 249.666) (xy 312.543 248.4999)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "992af582-6d29-4fa9-88c7-65839f14d5f1")
+	)
+	(wire
+		(pts
 			(xy 290.8785 68.8942) (xy 290.8785 68.9216)
 		)
 		(stroke
@@ -7814,6 +7850,16 @@
 	)
 	(wire
 		(pts
+			(xy 312.543 248.4999) (xy 324.1896 248.4999)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "bbb13675-9acc-4d34-8bc6-0ef25fa92645")
+	)
+	(wire
+		(pts
 			(xy 254.4662 65.4724) (xy 252.4913 65.4724)
 		)
 		(stroke
@@ -7854,7 +7900,7 @@
 	)
 	(wire
 		(pts
-			(xy 309.8673 249.666) (xy 312.8114 249.666)
+			(xy 337.1564 250.6056) (xy 340.1005 250.6056)
 		)
 		(stroke
 			(width 0)
@@ -8164,6 +8210,16 @@
 	)
 	(wire
 		(pts
+			(xy 324.1896 248.4999) (xy 324.1896 247.0987)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "dfdcdd97-1e51-48a6-927d-31b36f14827f")
+	)
+	(wire
+		(pts
 			(xy 157.7232 205.3182) (xy 157.7232 205.8383)
 		)
 		(stroke
@@ -8261,6 +8317,16 @@
 			(type default)
 		)
 		(uuid "ec3c1083-f120-4f6d-90dc-caa424b7e42d")
+	)
+	(wire
+		(pts
+			(xy 324.1896 250.6056) (xy 324.1896 248.4999)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "ed09504f-1795-4076-a6cb-20d0caf444ec")
 	)
 	(wire
 		(pts
@@ -11117,7 +11183,7 @@
 	)
 	(symbol
 		(lib_id "Jumper:SolderJumper_2_Open")
-		(at 306.0573 249.666 0)
+		(at 333.3464 250.6056 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
@@ -11125,7 +11191,7 @@
 		(dnp no)
 		(uuid "2985ec6a-d3a8-40a3-82ec-a4f3ec7e3899")
 		(property "Reference" "JP6"
-			(at 306.0573 247.634 0)
+			(at 334.3408 253.512 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11133,7 +11199,7 @@
 			)
 		)
 		(property "Value" "SolderJumper_2_Open"
-			(at 306.0573 246.618 0)
+			(at 333.3464 247.5576 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11142,7 +11208,7 @@
 			)
 		)
 		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
-			(at 306.0573 249.666 0)
+			(at 333.3464 250.6056 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11151,7 +11217,7 @@
 			)
 		)
 		(property "Datasheet" "~"
-			(at 306.0573 249.666 0)
+			(at 333.3464 250.6056 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11160,7 +11226,7 @@
 			)
 		)
 		(property "Description" "Solder Jumper, 2-pole, open"
-			(at 306.0573 249.666 0)
+			(at 333.3464 250.6056 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -14924,73 +14990,6 @@
 		)
 	)
 	(symbol
-		(lib_id "power:+3V3")
-		(at 312.8114 249.666 270)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "78f8d890-74f2-42f8-9256-7eba0edbe53a")
-		(property "Reference" "#PWR040"
-			(at 309.0014 249.666 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3V3"
-			(at 316.6679 249.6659 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" ""
-			(at 312.8114 249.666 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 312.8114 249.666 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3V3\""
-			(at 312.8114 249.666 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "e54c45ec-23d6-47f2-b7e0-6e688218693c")
-		)
-		(instances
-			(project "motor-logger"
-				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
-					(reference "#PWR040")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "power:+3.3V")
 		(at 315.9755 208.6281 270)
 		(unit 1)
@@ -15576,6 +15575,73 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "#GND01")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 339.8404 247.0987 270)
+		(mirror x)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "84ad8e16-9116-4829-8aa8-e0b093341939")
+		(property "Reference" "#PWR070"
+			(at 336.0304 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 343.6504 247.0987 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 339.8404 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 339.8404 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 339.8404 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "a8f1bb71-e1c1-44ff-b9fb-0b2b52309774")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "#PWR070")
 					(unit 1)
 				)
 			)
@@ -16698,6 +16764,74 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "C16")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Jumper:SolderJumper_2_Open")
+		(at 336.0304 247.0987 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "99ddf907-3da8-4798-89e2-059fb1b3badd")
+		(property "Reference" "JP12"
+			(at 336.0304 245.0667 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "SolderJumper_2_Open"
+			(at 336.0304 244.0507 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Jumper:SolderJumper-2_P1.3mm_Open_RoundedPad1.0x1.5mm"
+			(at 336.0304 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 336.0304 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Solder Jumper, 2-pole, open"
+			(at 336.0304 247.0987 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "86473552-d5b8-4b00-a321-4841f54eef2d")
+		)
+		(pin "2"
+			(uuid "acf8aad4-0ee5-4a15-a582-f96cad13d56d")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "JP12")
 					(unit 1)
 				)
 			)
@@ -18853,7 +18987,7 @@
 				)
 			)
 		)
-		(property "Footprint" "Resistor_SMD:R_0603_1608Metric_Pad0.98x0.95mm_HandSolder"
+		(property "Footprint" "Resistor_SMD:R_0805_2012Metric_Pad1.20x1.40mm_HandSolder"
 			(at 74.7602 144.8171 90)
 			(effects
 				(font
@@ -20603,6 +20737,73 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "R15")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+3.3V")
+		(at 340.1005 250.6056 270)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "ea9d3c52-c34f-4d60-9cdc-4c97831cdffd")
+		(property "Reference" "#PWR040"
+			(at 336.2905 250.6056 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+3.3V"
+			(at 344.4301 250.6055 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
+			)
+		)
+		(property "Footprint" ""
+			(at 340.1005 250.6056 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 340.1005 250.6056 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
+			(at 340.1005 250.6056 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "fe1a0442-7fad-4bbd-9d27-e9e1c03be3cc")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "#PWR040")
 					(unit 1)
 				)
 			)
