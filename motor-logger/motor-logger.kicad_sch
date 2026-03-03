@@ -520,6 +520,224 @@
 			)
 			(embedded_fonts no)
 		)
+		(symbol "Connector:Barrel_Jack_MountingPin"
+			(pin_names
+				(hide yes)
+			)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "J7"
+				(at 0 8.89 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Value" "Barrel_Jack_MountingPin"
+				(at 0 6.35 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" "Connector_BarrelJack:BarrelJack_GCT_DCJ200-10-A_Horizontal"
+				(at 1.27 -1.016 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" "~"
+				(at 1.27 -1.016 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "DC Barrel Jack with a mounting pin"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "DC power barrel jack connector"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_fp_filters" "BarrelJack*"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "Barrel_Jack_MountingPin_0_1"
+				(rectangle
+					(start -5.08 3.81)
+					(end 5.08 -3.81)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type background)
+					)
+				)
+				(polyline
+					(pts
+						(xy -3.81 -2.54) (xy -2.54 -2.54) (xy -1.27 -1.27) (xy 0 -2.54) (xy 2.54 -2.54) (xy 5.08 -2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -3.302 1.905)
+					(mid -3.9343 2.54)
+					(end -3.302 3.175)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(arc
+					(start -3.302 1.905)
+					(mid -3.9343 2.54)
+					(end -3.302 3.175)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(rectangle
+					(start 3.683 3.175)
+					(end -3.302 1.905)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type outline)
+					)
+				)
+				(polyline
+					(pts
+						(xy 5.08 2.54) (xy 3.81 2.54)
+					)
+					(stroke
+						(width 0.254)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "Barrel_Jack_MountingPin_1_1"
+				(polyline
+					(pts
+						(xy -1.016 -4.572) (xy 1.016 -4.572)
+					)
+					(stroke
+						(width 0.1524)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(text "Mounting"
+					(at 0 -4.191 0)
+					(effects
+						(font
+							(size 0.381 0.381)
+						)
+					)
+				)
+				(pin passive line
+					(at 0 -7.62 90)
+					(length 3.048)
+					(name "MountPin"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin passive line
+					(at 7.62 -2.54 180)
+					(length 2.54)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "2"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+			(embedded_fonts no)
+		)
 		(symbol "Connector:Conn_01x02_Pin"
 			(pin_names
 				(offset 1.016)
@@ -5787,6 +6005,10 @@
 		(uuid "36389364-5f0e-4498-bd43-8a16cc1f255a")
 	)
 	(no_connect
+		(at 19.7823 150.6591)
+		(uuid "373d115b-5fdb-4b6a-9923-09d872debf4e")
+	)
+	(no_connect
 		(at 252.4913 52.7724)
 		(uuid "39a3b199-bd7a-46d8-b28f-210a2f89a7d4")
 	)
@@ -5813,6 +6035,10 @@
 	(no_connect
 		(at 297.2478 219.186)
 		(uuid "52e6806b-1e16-4829-9922-ea3f16fdb6ee")
+	)
+	(no_connect
+		(at 19.7782 95.6776)
+		(uuid "55ef1215-b00a-495e-8ce9-6a5312d9222c")
 	)
 	(no_connect
 		(at 450.9507 99.3954)
@@ -5869,6 +6095,10 @@
 	(no_connect
 		(at 315.9749 68.8942)
 		(uuid "975e7e0e-cfd7-454d-9e9b-e95dc5eb4e85")
+	)
+	(no_connect
+		(at 103.4517 98.1828)
+		(uuid "9a4afe75-bf28-480d-930f-39aa53332d03")
 	)
 	(no_connect
 		(at 297.2478 234.426)
@@ -6057,16 +6287,6 @@
 			(type default)
 		)
 		(uuid "0f30c561-f723-43c3-82a8-abd342e5e70e")
-	)
-	(wire
-		(pts
-			(xy 112.3218 90.5628) (xy 111.0717 90.5628)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "0f95d1ea-5878-4000-ae74-4fc47968da81")
 	)
 	(wire
 		(pts
@@ -6320,16 +6540,6 @@
 	)
 	(wire
 		(pts
-			(xy 112.3218 96.7344) (xy 112.3218 90.5628)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "20a76f77-782d-4201-b4cf-d0c382db7b99")
-	)
-	(wire
-		(pts
 			(xy 419.8827 56.2154) (xy 419.8827 43.6376)
 		)
 		(stroke
@@ -6367,6 +6577,16 @@
 			(type default)
 		)
 		(uuid "238c138f-ea44-48a6-8d59-9a112d288360")
+	)
+	(wire
+		(pts
+			(xy 27.4023 145.5791) (xy 28.6837 145.5791)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "23c0c154-2d98-47fd-8a39-3b6d5411a9c9")
 	)
 	(wire
 		(pts
@@ -7040,6 +7260,16 @@
 	)
 	(wire
 		(pts
+			(xy 28.6483 90.5976) (xy 28.6483 94.2292)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "733b89be-4ff1-40fd-b4f8-e4ffde86d286")
+	)
+	(wire
+		(pts
 			(xy 322.9599 40.3192) (xy 322.9599 41.5892)
 		)
 		(stroke
@@ -7067,26 +7297,6 @@
 			(type default)
 		)
 		(uuid "7693200f-4b58-4f8b-8479-b60e69f9127e")
-	)
-	(wire
-		(pts
-			(xy 28.6524 143.0391) (xy 27.4023 143.0391)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "772f73e8-6a17-4129-b3ec-48e3ab7d4547")
-	)
-	(wire
-		(pts
-			(xy 28.6483 88.0576) (xy 27.3982 88.0576)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7807cf5d-c325-4de7-8aa6-06ebd783bd28")
 	)
 	(wire
 		(pts
@@ -7127,26 +7337,6 @@
 			(type default)
 		)
 		(uuid "7b239370-a325-4950-90b4-b431bd9a9a87")
-	)
-	(wire
-		(pts
-			(xy 28.6837 149.2107) (xy 28.6524 149.2107)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7b73d980-81ce-41a0-9716-bbe4139cda30")
-	)
-	(wire
-		(pts
-			(xy 28.6483 94.2292) (xy 28.6483 88.0576)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "7cba2609-9c88-48b6-b428-d193896a6196")
 	)
 	(wire
 		(pts
@@ -7267,6 +7457,16 @@
 			(type default)
 		)
 		(uuid "891751a5-07f6-4edf-b0be-464a579b15ca")
+	)
+	(wire
+		(pts
+			(xy 28.6837 145.5791) (xy 28.6837 149.2107)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "89683183-947d-4358-8289-ecec4a757923")
 	)
 	(wire
 		(pts
@@ -7520,6 +7720,16 @@
 	)
 	(wire
 		(pts
+			(xy 111.0717 93.1028) (xy 112.3218 93.1028)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "9a6c40d5-a84a-4192-9d4e-57b550f4d371")
+	)
+	(wire
+		(pts
 			(xy 87.9559 194.4714) (xy 96.2109 194.4714)
 		)
 		(stroke
@@ -7627,16 +7837,6 @@
 			(type default)
 		)
 		(uuid "a3f9d3c4-8cb6-4773-903c-0b50c7b97d23")
-	)
-	(wire
-		(pts
-			(xy 28.6524 149.2107) (xy 28.6524 143.0391)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a4a53bb6-eecd-4ab6-bb98-f7ea970e08e8")
 	)
 	(wire
 		(pts
@@ -8360,6 +8560,16 @@
 	)
 	(wire
 		(pts
+			(xy 112.3218 93.1028) (xy 112.3218 96.7344)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f3686502-ed66-4f90-978e-be3c6a80da52")
+	)
+	(wire
+		(pts
 			(xy 65.3005 194.3452) (xy 61.6005 194.3452)
 		)
 		(stroke
@@ -8437,6 +8647,16 @@
 			(type default)
 		)
 		(uuid "f76b3e59-c095-4114-b21a-c84b3c95b35c")
+	)
+	(wire
+		(pts
+			(xy 27.3982 90.5976) (xy 28.6483 90.5976)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "f7cab4ff-d838-412d-a169-adb85445f84d")
 	)
 	(wire
 		(pts
@@ -12800,6 +13020,7 @@
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
 		(property "Description" "Resistor"
@@ -13485,75 +13706,6 @@
 		)
 	)
 	(symbol
-		(lib_id "Connector:Conn_01x02_Pin")
-		(at 105.9917 88.0228 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "551ba240-db10-42ea-b3bd-769909a49384")
-		(property "Reference" "J3"
-			(at 106.6267 83.4525 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x02_Pin"
-			(at 106.6267 85.9925 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 105.9917 88.0228 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 105.9917 88.0228 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 105.9917 88.0228 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "0a1c4715-d3cb-412b-96f5-a3e955bd7338")
-		)
-		(pin "2"
-			(uuid "20ed1815-005f-44cc-b3c3-3c657f4dc9a6")
-		)
-		(instances
-			(project "motor-logger"
-				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
-					(reference "J3")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Transistor_FET:BSS138")
 		(at 343.2799 86.6742 0)
 		(mirror x)
@@ -14106,75 +14258,6 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "#PWR067")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_01x02_Pin")
-		(at 22.3223 140.4991 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "69186811-8baf-454d-b72d-c0e38d586d25")
-		(property "Reference" "J2"
-			(at 22.9573 135.9288 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x02_Pin"
-			(at 22.9573 138.4688 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 22.3223 140.4991 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 22.3223 140.4991 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 22.3223 140.4991 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "8b6e41f9-29e3-4498-85d1-a2f741c908b4")
-		)
-		(pin "2"
-			(uuid "54bd7be1-d59f-4a4f-b864-d4667a474bec")
-		)
-		(instances
-			(project "motor-logger"
-				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
-					(reference "J2")
 					(unit 1)
 				)
 			)
@@ -16589,6 +16672,122 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "D3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Barrel_Jack_MountingPin")
+		(at 19.7782 88.0576 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "95f1af49-1ae5-47b7-ab68-9817e82355c6")
+		(property "Reference" "J10"
+			(at 19.8762 82.1471 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Barrel_Jack_MountingPin"
+			(at 19.7782 81.6298 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_BarrelJack:BarrelJack_GCT_DCJ200-10-A_Horizontal"
+			(at 21.0482 89.0736 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 21.0482 89.0736 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "DC Barrel Jack with a mounting pin"
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part Name" ""
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" ""
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier" ""
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier Part" ""
+			(at 19.7782 88.0576 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "262d7ee1-6f2c-4023-b816-b1a507e5031b")
+		)
+		(pin "2"
+			(uuid "5b0e5e8a-df8f-4483-9d1a-a9a95c399f63")
+		)
+		(pin "3"
+			(uuid "02b07618-7b02-4a53-aaf2-9cbfffa05c7e")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "J10")
 					(unit 1)
 				)
 			)
@@ -19365,6 +19564,122 @@
 		)
 	)
 	(symbol
+		(lib_id "Connector:Barrel_Jack_MountingPin")
+		(at 103.4517 90.5628 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "cd906703-25b4-4996-9b5b-6e25e5be4c10")
+		(property "Reference" "J1"
+			(at 103.5497 84.6523 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Barrel_Jack_MountingPin"
+			(at 103.4517 84.135 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_BarrelJack:BarrelJack_GCT_DCJ200-10-A_Horizontal"
+			(at 104.7217 91.5788 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 104.7217 91.5788 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "DC Barrel Jack with a mounting pin"
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part Name" ""
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" ""
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier" ""
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier Part" ""
+			(at 103.4517 90.5628 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "bc775495-ce2c-4fca-a24a-6dd37b1fa4e7")
+		)
+		(pin "2"
+			(uuid "b35f1fd4-7459-4725-8192-2744f004b08d")
+		)
+		(pin "3"
+			(uuid "557d8408-e088-4427-ada3-e60a52bc3033")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "J1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:C")
 		(at 403.6412 63.8354 180)
 		(unit 1)
@@ -19824,75 +20139,6 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "#PWR051")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "Connector:Conn_01x02_Pin")
-		(at 22.3182 85.5176 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d95527d1-7a2d-4248-951f-97d839d6e197")
-		(property "Reference" "J1"
-			(at 22.9532 80.9473 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Value" "Conn_01x02_Pin"
-			(at 22.9532 83.4873 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Footprint" "Connector_JST:JST_XH_B2B-XH-A_1x02_P2.50mm_Vertical"
-			(at 22.3182 85.5176 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 22.3182 85.5176 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Generic connector, single row, 01x02, script generated"
-			(at 22.3182 85.5176 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "74664958-a36d-4560-a96d-143d2876ee6b")
-		)
-		(pin "2"
-			(uuid "ce6b05f2-5055-47b7-b8b2-44007b83ad1c")
-		)
-		(instances
-			(project ""
-				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
-					(reference "J1")
 					(unit 1)
 				)
 			)
@@ -21899,6 +22145,122 @@
 			(project "motor-logger"
 				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
 					(reference "SW3")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "Connector:Barrel_Jack_MountingPin")
+		(at 19.7823 143.0391 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(uuid "fb621b69-49a9-4f2a-8521-06b52225b3c4")
+		(property "Reference" "J2"
+			(at 19.8803 137.1286 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "Barrel_Jack_MountingPin"
+			(at 19.7823 136.6113 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Footprint" "Connector_BarrelJack:BarrelJack_GCT_DCJ200-10-A_Horizontal"
+			(at 21.0523 144.0551 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" "~"
+			(at 21.0523 144.0551 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "DC Barrel Jack with a mounting pin"
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "LCSC Part Name" ""
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer" ""
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Manufacturer Part" ""
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier" ""
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Supplier Part" ""
+			(at 19.7823 143.0391 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "497c72c4-e71b-4b33-9c7c-4463176a68b3")
+		)
+		(pin "2"
+			(uuid "28c9a118-a4bd-4b90-ad43-24f2ad076648")
+		)
+		(pin "3"
+			(uuid "1b578c91-aef1-4f4f-8dee-6ca516613e74")
+		)
+		(instances
+			(project "motor-logger"
+				(path "/cc795659-a612-49f1-8a6f-d10ace440fb1"
+					(reference "J2")
 					(unit 1)
 				)
 			)
