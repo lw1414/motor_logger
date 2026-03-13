@@ -1,4 +1,6 @@
-/* Edge Impulse + 3 Phase Motor Resistance Tester */
+/* Edge Impulse + 3 Phase Motor Resistance Tester
+   Hybrid Decision: Machine Learning + Resistive Imbalance
+*/
 
 #include <motor-project_inferencing.h>
 #include <U8g2lib.h>
@@ -20,7 +22,6 @@ U8G2_ST7920_128X64_F_SW_SPI lcd(U8G2_R0, 12, 11, 10, 13);
 /* Calibration */
 #define CAL_R1_ACTUAL 10.0
 #define CAL_R2_ACTUAL 82.0
-
 #define CAL_R1_MEASURED 7.03
 #define CAL_R2_MEASURED 74.53
 
@@ -31,35 +32,12 @@ float lastU = 0;
 float lastV = 0;
 float lastW = 0;
 
-/* Edge Impulse sensor structure */
-typedef struct {
-    const char *name;
-    float *value;
-    uint8_t (*poll_sensor)(void);
-    bool (*init_sensor)(void);
-    int8_t status;
-} eiSensors;
-
-#define N_SENSORS 3
-
 static float data[3];
-static int8_t fusion_sensors[N_SENSORS];
-static int fusion_ix = 0;
-
 static const bool debug_nn = false;
 
-/* Forward declarations */
-bool init_ADC(void);
-uint8_t poll_ADC(void);
 
-/* Sensor list (U V W resistance) */
-eiSensors sensors[] = {
-    {"phaseU", &data[0], &poll_ADC, &init_ADC, -1},
-    {"phaseV", &data[1], &poll_ADC, &init_ADC, -1},
-    {"phaseW", &data[2], &poll_ADC, &init_ADC, -1},
-};
+/* ---------------- Resistance Reading ---------------- */
 
-/* Resistance Reading */
 float readResistance(int pin) {
 
   int adcValue = 0;
@@ -83,7 +61,44 @@ float calibrate(float measured) {
   return (measured * scale) + offset;
 }
 
-/* LCD Screens */
+
+/* ---------------- Motor Detection ---------------- */
+
+bool motorConnected(float u, float v, float w) {
+
+  float threshold = 0.10;
+
+  if (abs(u - 1.43) < threshold &&
+      abs(v - 1.43) < threshold &&
+      abs(w - 1.43) < threshold)
+      return false;
+
+  if (u <= 0 || v <= 0 || w <= 0)
+      return false;
+
+  return true;
+}
+
+
+/* ---------------- Resistive Imbalance ---------------- */
+
+float computeImbalance(float u, float v, float w) {
+
+  float rave = (u + v + w) / 3.0;
+
+  float du = abs(u - rave);
+  float dv = abs(v - rave);
+  float dw = abs(w - rave);
+
+  float rmax = max(du, max(dv, dw));
+
+  float imbalance = (rmax / rave) * 100.0;
+
+  return imbalance;
+}
+
+
+/* ---------------- LCD Utilities ---------------- */
 
 void drawCentered(int y, const char *text) {
   int16_t x = (128 - lcd.getStrWidth(text)) / 2;
@@ -95,69 +110,111 @@ void showReady() {
   lcd.clearBuffer();
   lcd.setFont(u8g2_font_ncenB08_tr);
 
-  drawCentered(20,"Motor Tester");
+  drawCentered(20,"3PH Motor Tester");
   drawCentered(40,"Press Button");
   drawCentered(55,"To Start");
 
   lcd.sendBuffer();
 }
 
-void showSampling() {
+void showSampling()
+{
 
   lcd.clearBuffer();
-  lcd.setFont(u8g2_font_ncenB08_tr);
 
-  lcd.drawStr(25,30,"Sampling...");
+  lcd.setFont(u8g2_font_6x10_tr);
+  drawCentered(10,"3PH MOTOR TESTER");
+
+  lcd.setFont(u8g2_font_ncenB08_tr);
+  drawCentered(35,"MEASURING");
+
+  lcd.setFont(u8g2_font_6x12_tr);
+  drawCentered(55,"PLEASE WAIT");
 
   lcd.sendBuffer();
 }
 
-void showProcessing() {
+void showProcessing()
+{
 
   lcd.clearBuffer();
-  lcd.setFont(u8g2_font_ncenB08_tr);
 
-  lcd.drawStr(20,30,"AI Processing");
+  lcd.setFont(u8g2_font_6x10_tr);
+  drawCentered(10,"3PH MOTOR TESTER");
+
+  lcd.setFont(u8g2_font_ncenB08_tr);
+  drawCentered(35,"AI ANALYZING");
+
+  lcd.setFont(u8g2_font_6x12_tr);
+  drawCentered(55,"RUNNING MODEL");
 
   lcd.sendBuffer();
 }
 
-void showResult(String label) {
+void showNoMotor()
+{
 
   lcd.clearBuffer();
+
+  lcd.setFont(u8g2_font_6x10_tr);
+  drawCentered(10,"3PH MOTOR TESTER");
+
   lcd.setFont(u8g2_font_ncenB08_tr);
+  drawCentered(30,"SYSTEM ERROR");
 
-  drawCentered(10,"Result:");
+  lcd.setFont(u8g2_font_6x12_tr);
+  drawCentered(50,"NO MOTOR CONNECTED");
 
-  drawCentered(22,label.c_str());
+  lcd.sendBuffer();
+}
+
+void showResult(String label, float imbalance)
+{
+
+  lcd.clearBuffer();
+
+  /* TITLE */
+  lcd.setFont(u8g2_font_6x10_tr);
+  drawCentered(10,"3PH MOTOR TESTER");
+
+  /* STATUS */
+  lcd.setFont(u8g2_font_6x12_tr);
+
+  String status = "STATUS: " + label;
+  drawCentered(24,status.c_str());
+
+  /* VALUES */
+
+  lcd.setFont(u8g2_font_6x12_tr);
 
   char buf[20];
 
-  sprintf(buf,"U: %.2f", lastU);
-  drawCentered(38,buf);
+  sprintf(buf,"U: %.3f", lastU);
+  lcd.drawStr(2,40,buf);
 
-  sprintf(buf,"V: %.2f", lastV);
-  drawCentered(50,buf);
+  sprintf(buf,"V: %.3f", lastV);
+  lcd.drawStr(66,40,buf);
 
-  sprintf(buf,"W: %.2f", lastW);
-  drawCentered(62,buf);
+  sprintf(buf,"W: %.3f", lastW);
+  lcd.drawStr(2,52,buf);
+
+  sprintf(buf,"I: %.2f%%", imbalance);
+  lcd.drawStr(66,52,buf);
+
+  /* IMBALANCE BAR */
+
+  int barWidth = map(imbalance,0,10,0,120);
+
+  if(barWidth > 120) barWidth = 120;
+
+  lcd.drawFrame(4,56,120,6);
+  lcd.drawBox(4,56,barWidth,6);
 
   lcd.sendBuffer();
 }
 
-/* ADC Init */
 
-bool init_ADC(void) {
-  static bool init_status = false;
-
-  if (!init_status) {
-    init_status = true;
-  }
-
-  return init_status;
-}
-
-/* Poll ADC -> Read U V W */
+/* ---------------- ADC Poll ---------------- */
 
 uint8_t poll_ADC(void) {
 
@@ -173,19 +230,18 @@ uint8_t poll_ADC(void) {
   lastV = v;
   lastW = w;
 
-  // ===== SERIAL PRINT =====
   Serial.print("U: ");
-  Serial.print(u, 2);
+  Serial.print(u,3);
   Serial.print("  V: ");
-  Serial.print(v, 2);
+  Serial.print(v,3);
   Serial.print("  W: ");
-  Serial.println(w, 2);
-  // ========================
+  Serial.println(w,3);
 
   return 0;
 }
 
-/* Setup */
+
+/* ---------------- Setup ---------------- */
 
 void setup() {
 
@@ -208,7 +264,8 @@ void setup() {
   Serial.println("Motor AI Tester Ready");
 }
 
-/* Main Loop */
+
+/* ---------------- Main Loop ---------------- */
 
 void loop() {
 
@@ -220,7 +277,6 @@ void loop() {
 
       showSampling();
 
-      /* Allocate Edge Impulse buffer */
       float buffer[EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE] = {0};
 
       for (size_t ix = 0; ix < EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE; ix += 3) {
@@ -234,13 +290,28 @@ void loop() {
         delay(EI_CLASSIFIER_INTERVAL_MS);
       }
 
+      /* Motor connection check */
+
+      if (!motorConnected(lastU,lastV,lastW)) {
+
+        Serial.println("ERROR: No Motor Found");
+
+        showNoMotor();
+        delay(4000);
+        showReady();
+
+        return;
+      }
+
       showProcessing();
 
       signal_t signal;
 
-      int err = numpy::signal_from_buffer(buffer,
-                                           EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE,
-                                           &signal);
+      int err = numpy::signal_from_buffer(
+        buffer,
+        EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE,
+        &signal
+      );
 
       if (err != 0) {
         Serial.println("Signal error");
@@ -256,7 +327,7 @@ void loop() {
         return;
       }
 
-      Serial.println("Predictions:");
+      /* -------- Machine Learning Prediction -------- */
 
       float best = 0;
       String bestLabel = "";
@@ -268,13 +339,36 @@ void loop() {
         Serial.println(result.classification[ix].value);
 
         if (result.classification[ix].value > best) {
-
           best = result.classification[ix].value;
           bestLabel = result.classification[ix].label;
         }
       }
 
-      showResult(bestLabel);
+      /* -------- Resistive Imbalance -------- */
+
+      float imbalance = computeImbalance(lastU,lastV,lastW);
+
+      Serial.print("Imbalance %: ");
+      Serial.println(imbalance);
+
+      /* -------- Hybrid Decision -------- */
+
+      String health;
+
+      if (bestLabel == "bad") {
+        health = "MOTOR BAD";
+      }
+      else {
+
+        if (imbalance < 3)
+          health = "MOTOR GOOD";
+        else if (imbalance < 5)
+          health = "WARNING";
+        else
+          health = "MOTOR BAD";
+      }
+
+      showResult(health, imbalance);
 
       delay(5000);
 
