@@ -1,5 +1,6 @@
 /* Edge Impulse + 3 Phase Motor Resistance Tester
    Hybrid Decision: Machine Learning + Resistive Imbalance
+   Non-blocking version using millis()
 */
 
 #include <motor-project_inferencing.h>
@@ -35,32 +36,47 @@ float lastW = 0;
 static float data[3];
 static const bool debug_nn = false;
 
-
 /* ---------------- Resistance Reading ---------------- */
 
 float readResistance(int pin) {
-
   int adcValue = 0;
 
+  // --- Average multiple ADC readings for stability ---
   for (int i = 0; i < 10; i++) {
     adcValue += analogRead(pin);
   }
-
   adcValue /= 10;
 
+ 
+  // --- Detect open/floating pin (wide mid-range detection) ---
+  //if (adcValue > 1700 && adcValue < 1850) {
+ //   return 0;
+ // }
+
+  // --- Convert to voltage ---
   float voltage = adcValue * (VREF / 4095.0);
 
-  if (voltage >= VREF - 0.01) return -1;
+  // --- Reject voltages very close to VREF (short / open extreme) ---
+ // if (voltage >= VREF - 0.01) return 0;
 
+  // --- Compute resistance using voltage divider formula ---
   float resistance = (voltage * KNOWN_RESISTOR) / (VREF - voltage);
+
+  // --- Reject absurdly high resistance spikes ---
+  if (resistance > 10000) return 0;
+
+  // --- Treat very low values as zero ---
+  if (resistance <= 3.0) return 0;
 
   return resistance;
 }
 
 float calibrate(float measured) {
+  // Preserve zero (open probe)
+  if (measured == 0) return 0;
+
   return (measured * scale) + offset;
 }
-
 
 /* ---------------- Motor Detection ---------------- */
 
@@ -68,17 +84,14 @@ bool motorConnected(float u, float v, float w) {
 
   float threshold = 0.10;
 
-  if (abs(u - 1.43) < threshold &&
-      abs(v - 1.43) < threshold &&
-      abs(w - 1.43) < threshold)
-      return false;
+  if (abs(u - 2.501) < threshold && abs(v - 2.501) < threshold && abs(w - 2.501) < threshold)
+    return false;
 
-  if (u <= 0 || v <= 0 || w <= 0)
-      return false;
+  if (u <= 0.2 && v <= 0.2 && w <= 0.2)
+    return false;
 
   return true;
 }
-
 
 /* ---------------- Resistive Imbalance ---------------- */
 
@@ -97,7 +110,6 @@ float computeImbalance(float u, float v, float w) {
   return imbalance;
 }
 
-
 /* ---------------- LCD Utilities ---------------- */
 
 void drawCentered(int y, const char *text) {
@@ -106,117 +118,95 @@ void drawCentered(int y, const char *text) {
 }
 
 void showReady() {
-
   lcd.clearBuffer();
   lcd.setFont(u8g2_font_ncenB08_tr);
-
-  drawCentered(20,"3PH Motor Tester");
-  drawCentered(40,"Press Button");
-  drawCentered(55,"To Start");
-
+  drawCentered(20, "3PH Motor Tester");
+  drawCentered(40, "Press Button");
+  drawCentered(55, "To Start");
   lcd.sendBuffer();
 }
 
-void showSampling()
-{
-
+void showSampling() {
   lcd.clearBuffer();
-
   lcd.setFont(u8g2_font_6x10_tr);
-  drawCentered(10,"3PH MOTOR TESTER");
-
+  drawCentered(10, "3PH MOTOR TESTER");
   lcd.setFont(u8g2_font_ncenB08_tr);
-  drawCentered(35,"MEASURING");
-
+  drawCentered(35, "MEASURING");
   lcd.setFont(u8g2_font_6x12_tr);
-  drawCentered(55,"PLEASE WAIT");
-
+  drawCentered(55, "PLEASE WAIT");
   lcd.sendBuffer();
 }
 
-void showProcessing()
-{
-
+void showProcessing() {
   lcd.clearBuffer();
-
   lcd.setFont(u8g2_font_6x10_tr);
-  drawCentered(10,"3PH MOTOR TESTER");
-
+  drawCentered(10, "3PH MOTOR TESTER");
   lcd.setFont(u8g2_font_ncenB08_tr);
-  drawCentered(35,"AI ANALYZING");
-
+  drawCentered(35, "AI ANALYZING");
   lcd.setFont(u8g2_font_6x12_tr);
-  drawCentered(55,"RUNNING MODEL");
-
+  drawCentered(55, "RUNNING MODEL");
   lcd.sendBuffer();
 }
 
-void showNoMotor()
-{
-
+void showNoMotor() {
   lcd.clearBuffer();
-
   lcd.setFont(u8g2_font_6x10_tr);
-  drawCentered(10,"3PH MOTOR TESTER");
-
+  drawCentered(10, "3PH MOTOR TESTER");
   lcd.setFont(u8g2_font_ncenB08_tr);
-  drawCentered(30,"SYSTEM ERROR");
-
+  drawCentered(30, "SYSTEM ERROR");
   lcd.setFont(u8g2_font_6x12_tr);
-  drawCentered(50,"NO MOTOR CONNECTED");
-
+  drawCentered(50, "NO MOTOR CONNECTED");
   lcd.sendBuffer();
 }
 
-void showResult(String label, float imbalance)
-{
-
+void showResult(String label, float imbalance) {
   lcd.clearBuffer();
-
-  /* TITLE */
   lcd.setFont(u8g2_font_6x10_tr);
-  drawCentered(10,"3PH MOTOR TESTER");
+  drawCentered(10, "3PH MOTOR TESTER");
 
-  /* STATUS */
   lcd.setFont(u8g2_font_6x12_tr);
-
   String status = "STATUS: " + label;
-  drawCentered(24,status.c_str());
-
-  /* VALUES */
+  drawCentered(24, status.c_str());
 
   lcd.setFont(u8g2_font_6x12_tr);
-
   char buf[20];
+// U Phase
+if (lastU == 0)
+  lcd.drawStr(2, 40, "U: NC/INF");
+else {
+  sprintf(buf, "U: %.3f", lastU);
+  lcd.drawStr(2, 40, buf);
+}
 
-  sprintf(buf,"U: %.3f", lastU);
-  lcd.drawStr(2,40,buf);
+// V Phase
+if (lastV == 0)
+  lcd.drawStr(66, 40, "V: NC/INF");
+else {
+  sprintf(buf, "V: %.3f", lastV);
+  lcd.drawStr(66, 40, buf);
+}
 
-  sprintf(buf,"V: %.3f", lastV);
-  lcd.drawStr(66,40,buf);
+// W Phase
+if (lastW == 0)
+  lcd.drawStr(2, 52, "W: NC/INF");
+else {
+  sprintf(buf, "W: %.3f", lastW);
+  lcd.drawStr(2, 52, buf);
+}
+  sprintf(buf, "I: %.2f%%", imbalance);
+  lcd.drawStr(66, 52, buf);
 
-  sprintf(buf,"W: %.3f", lastW);
-  lcd.drawStr(2,52,buf);
-
-  sprintf(buf,"I: %.2f%%", imbalance);
-  lcd.drawStr(66,52,buf);
-
-  /* IMBALANCE BAR */
-
-  int barWidth = map(imbalance,0,10,0,120);
-
-  if(barWidth > 120) barWidth = 120;
-
-  lcd.drawFrame(4,56,120,6);
-  lcd.drawBox(4,56,barWidth,6);
+  int barWidth = map(imbalance, 0, 10, 0, 120);
+  if (barWidth > 120) barWidth = 120;
+  lcd.drawFrame(4, 56, 120, 6);
+  lcd.drawBox(4, 56, barWidth, 6);
 
   lcd.sendBuffer();
 }
-
 
 /* ---------------- ADC Poll ---------------- */
 
-uint8_t poll_ADC(void) {
+void poll_ADC(void) {
 
   float u = calibrate(readResistance(ADC_U_PIN));
   float v = calibrate(readResistance(ADC_V_PIN));
@@ -231,20 +221,42 @@ uint8_t poll_ADC(void) {
   lastW = w;
 
   Serial.print("U: ");
-  Serial.print(u,3);
+  Serial.print(u, 3);
   Serial.print("  V: ");
-  Serial.print(v,3);
+  Serial.print(v, 3);
   Serial.print("  W: ");
-  Serial.println(w,3);
-
-  return 0;
+  Serial.println(w, 3);
 }
 
+/* ---------------- State Machine ---------------- */
+
+enum State {
+  IDLE,
+  BUTTON_DEBOUNCE,
+  SAMPLING,
+  PROCESSING,
+  SHOW_RESULT,
+  RESULT_DELAY
+};
+
+State currentState = IDLE;
+
+unsigned long stateTimer = 0;
+unsigned long sampleTimer = 0;
+
+const int debounceTime = 50;
+const int sampleInterval = EI_CLASSIFIER_INTERVAL_MS;
+const int resultDisplayTime = 6000;
+
+size_t sampleIndex = 0;
+float buffer[EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE] = { 0 };
+
+ei_impulse_result_t result = { 0 };
+String health = "";
 
 /* ---------------- Setup ---------------- */
 
 void setup() {
-
   Serial.begin(115200);
 
   analogReadResolution(12);
@@ -254,9 +266,7 @@ void setup() {
 
   lcd.begin();
 
-  scale = (CAL_R2_ACTUAL - CAL_R1_ACTUAL) /
-          (CAL_R2_MEASURED - CAL_R1_MEASURED);
-
+  scale = (CAL_R2_ACTUAL - CAL_R1_ACTUAL) / (CAL_R2_MEASURED - CAL_R1_MEASURED);
   offset = CAL_R1_ACTUAL - (scale * CAL_R1_MEASURED);
 
   showReady();
@@ -264,115 +274,128 @@ void setup() {
   Serial.println("Motor AI Tester Ready");
 }
 
-
 /* ---------------- Main Loop ---------------- */
 
 void loop() {
+  unsigned long now = millis();
 
-  if (digitalRead(BUTTON_PIN) == LOW) {
+  switch (currentState) {
 
-    delay(50);
-
-    if (digitalRead(BUTTON_PIN) == LOW) {
-
-      showSampling();
-
-      float buffer[EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE] = {0};
-
-      for (size_t ix = 0; ix < EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE; ix += 3) {
-
-        poll_ADC();
-
-        buffer[ix + 0] = data[0];
-        buffer[ix + 1] = data[1];
-        buffer[ix + 2] = data[2];
-
-        delay(EI_CLASSIFIER_INTERVAL_MS);
-      }
-
-      /* Motor connection check */
-
-      if (!motorConnected(lastU,lastV,lastW)) {
-
-        Serial.println("ERROR: No Motor Found");
-
-        showNoMotor();
-        delay(4000);
-        showReady();
-
-        return;
-      }
-
-      showProcessing();
-
-      signal_t signal;
-
-      int err = numpy::signal_from_buffer(
-        buffer,
-        EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE,
-        &signal
-      );
-
-      if (err != 0) {
-        Serial.println("Signal error");
-        return;
-      }
-
-      ei_impulse_result_t result = {0};
-
-      err = run_classifier(&signal, &result, debug_nn);
-
-      if (err != EI_IMPULSE_OK) {
-        Serial.println("Classifier error");
-        return;
-      }
-
-      /* -------- Machine Learning Prediction -------- */
-
-      float best = 0;
-      String bestLabel = "";
-
-      for (size_t ix = 0; ix < EI_CLASSIFIER_LABEL_COUNT; ix++) {
-
-        Serial.print(result.classification[ix].label);
-        Serial.print(": ");
-        Serial.println(result.classification[ix].value);
-
-        if (result.classification[ix].value > best) {
-          best = result.classification[ix].value;
-          bestLabel = result.classification[ix].label;
+    case IDLE:
+      {
+        if (digitalRead(BUTTON_PIN) == LOW) {
+          stateTimer = now;
+          currentState = BUTTON_DEBOUNCE;
         }
+        break;
       }
 
-      /* -------- Resistive Imbalance -------- */
-
-      float imbalance = computeImbalance(lastU,lastV,lastW);
-
-      Serial.print("Imbalance %: ");
-      Serial.println(imbalance);
-
-      /* -------- Hybrid Decision -------- */
-
-      String health;
-
-      if (bestLabel == "bad") {
-        health = "MOTOR BAD";
-      }
-      else {
-
-        if (imbalance < 3)
-          health = "MOTOR GOOD";
-        else if (imbalance < 5)
-          health = "WARNING";
-        else
-          health = "MOTOR BAD";
+    case BUTTON_DEBOUNCE:
+      {
+        if (now - stateTimer >= debounceTime) {
+          if (digitalRead(BUTTON_PIN) == LOW) {
+            showSampling();
+            sampleIndex = 0;
+            memset(buffer, 0, sizeof(buffer));
+            sampleTimer = now;
+            currentState = SAMPLING;
+          } else {
+            currentState = IDLE;
+          }
+        }
+        break;
       }
 
-      showResult(health, imbalance);
+    case SAMPLING:
+      {
+        if (now - sampleTimer >= sampleInterval) {
+          poll_ADC();
+          buffer[sampleIndex + 0] = data[0];
+          buffer[sampleIndex + 1] = data[1];
+          buffer[sampleIndex + 2] = data[2];
+          sampleIndex += 3;
+          sampleTimer = now;
 
-      delay(5000);
+          if (sampleIndex >= EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE) {
+            currentState = PROCESSING;
+          }
+        }
+        break;
+      }
 
-      showReady();
-    }
+    case PROCESSING:
+      {
+        if (!motorConnected(lastU, lastV, lastW)) {
+          Serial.println("ERROR: No Motor Found");
+          showNoMotor();
+          stateTimer = now;
+          currentState = RESULT_DELAY;
+          break;
+        }
+
+        showProcessing();
+
+        signal_t signal;
+        int err = numpy::signal_from_buffer(buffer, EI_CLASSIFIER_DSP_INPUT_FRAME_SIZE, &signal);
+        if (err != 0) {
+          Serial.println("Signal error");
+          currentState = IDLE;
+          break;
+        }
+
+        ei_impulse_result_t result = { 0 };
+        err = run_classifier(&signal, &result, debug_nn);
+        if (err != EI_IMPULSE_OK) {
+          Serial.println("Classifier error");
+          currentState = IDLE;
+          break;
+        }
+
+        /* -------- Machine Learning Prediction -------- */
+        float best = 0;
+        String bestLabel = "";
+
+        for (size_t ix = 0; ix < EI_CLASSIFIER_LABEL_COUNT; ix++) {
+          Serial.print(result.classification[ix].label);
+          Serial.print(": ");
+          Serial.println(result.classification[ix].value);
+
+          if (result.classification[ix].value > best) {
+            best = result.classification[ix].value;
+            bestLabel = result.classification[ix].label;
+          }
+        }
+
+        /* -------- Resistive Imbalance -------- */
+        float imbalance = computeImbalance(lastU, lastV, lastW);
+        Serial.print("Imbalance %: ");
+        Serial.println(imbalance);
+
+        /* -------- Hybrid Decision -------- */
+        if (bestLabel == "bad") {
+          health = "FAULTY";
+        } else {
+          if (imbalance < 3)
+            health = "GOOD";
+          else if (imbalance < 5)
+            health = "WARNING";
+          else
+            health = "FAULTY";
+        }
+
+        showResult(health, imbalance);
+        stateTimer = now;
+        currentState = RESULT_DELAY;
+        break;
+      }
+
+    case RESULT_DELAY:
+      {
+        if (now - stateTimer >= resultDisplayTime) {
+          showReady();
+          currentState = IDLE;
+        }
+        break;
+      }
   }
 }
